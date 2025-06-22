@@ -1,9 +1,7 @@
 FROM ubuntu:24.04
 
-RUN groupadd -r poky \
-  && useradd -r -g poky -s /bin/bash -m poky \
-  && mkdir -p /work \
-  && chown -R poky:poky /work
+RUN groupadd -g 4200 poky \
+  && useradd -u 4201 -g poky -r -s /bin/bash -m poky
 
 # Install Yocto dependencies
 RUN apt-get update && apt-get install -y \

@@ -10,6 +10,8 @@ git submodule update
 # local.conf won't exist until this step on first execution
 source poky/oe-init-build-env
 
+rm -rf build/*
+
 CONFLINE="MACHINE = \"beaglebone-yocto\""
 
 cat conf/local.conf | grep "${CONFLINE}" >/dev/null
@@ -19,9 +21,9 @@ if [ $local_conf_info -ne 0 ]; then
   echo "Append ${CONFLINE} in the local.conf file"
   echo ${CONFLINE} >>conf/local.conf
 
-  echo 'PREFERRED_PROVIDER_virtual/kernel = "linux-yocto-rt"' >>conf/local.conf
-  echo 'KERNEL_FEATURES += "features/latency/latency.scc"' >>conf/local.conf
-  echo 'IMAGE_INSTALL += "rt-tests can-utils"' >>conf/local.conf
+  # echo 'PREFERRED_PROVIDER_virtual/kernel = "linux-yocto-rt"' >>conf/local.conf
+  # echo 'KERNEL_FEATURES += "features/latency/latency.scc"' >>conf/local.conf
+  echo 'IMAGE_INSTALL += "can-utils"' >>conf/local.conf
 
   # Add CAN support
   echo 'KERNEL_MODULE_AUTOLOAD += "can can-dev can-raw mcp251x"' >>conf/local.conf
@@ -30,7 +32,7 @@ else
   echo "${CONFLINE} already exists in the local.conf file"
 fi
 
-bitbake-layers add-layer ../meta-openembedded/meta-oe
+# bitbake-layers add-layer ../meta-openembedded/meta-oe
 
 # bitbake-layers show-layers | grep "meta-bbc" >/dev/null
 # layer_info=$?
@@ -45,6 +47,6 @@ bitbake-layers add-layer ../meta-openembedded/meta-oe
 set -e
 bitbake core-image-minimal
 
-cp tmp/deploy/images/beaglebone-yocto/core-image-minimal-beaglebone-yocto.rootfs.wic ../core-image-minimal-beaglebone-yocto.rootfs.wic
-
 /bin/bash
+
+# cp tmp/deploy/images/beaglebone-yocto/core-image-minimal-beaglebone-yocto.rootfs.wic ../core-image-minimal-beaglebone-yocto.rootfs.wic
