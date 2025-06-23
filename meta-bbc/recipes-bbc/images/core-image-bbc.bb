@@ -1,5 +1,6 @@
 inherit core-image
-CORE_IMAGE_EXTRA_INSTALL += "openssh can-utils paho-mqtt-cpp"
+CORE_IMAGE_EXTRA_INSTALL += "openssl paho-mqtt-c paho-mqtt-cpp can-utils bbc"
+
 inherit extrausers
 # See https://docs.yoctoproject.org/singleindex.html#extrausers-bbclass
 # We set a default password of root to match our busybox instance setup
